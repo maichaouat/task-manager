@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: tasksmanager         # Spring Boot application name
+  datasource:
+    url: jdbc:h2:mem:taskdb     # in-memory H2 database URL - todo: change later to real db
+    driver-class-name: org.h2.Driver  # H2 JDBC driver class
+    username: sa                # default H2 username
+    password:                   # no password required
+  jpa:
+    hibernate:
+      ddl-auto: update          # auto-create/update schema based on entities
+    show-sql: true              # log generated SQL statements
+  h2:
+    console:
+      enabled: true             # enable H2 web console
+      path: /h2-console         # URL path for the H2 console
+
