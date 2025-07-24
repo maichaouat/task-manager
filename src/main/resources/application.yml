@@ -15,3 +15,11 @@ spring:
       enabled: true             # enable H2 web console
       path: /h2-console         # URL path for the H2 console
 
+springdoc:
+  api-docs:
+    path:  /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+

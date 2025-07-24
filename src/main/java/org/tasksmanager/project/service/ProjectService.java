@@ -9,5 +9,4 @@ public interface ProjectService {
     List<ProjectDTO> getAll(int page, int size);
     ProjectDTO update(Long id, ProjectDTO dto);
     void delete(Long id);
-    void test();
 }

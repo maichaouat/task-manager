@@ -20,8 +20,6 @@ public class ProjectServiceImpl implements ProjectService {
         this.mapper = mapper;
     }
 
-    public void test(){ System.out.println("test"); }
-
     @Override
     public ProjectDTO create(ProjectDTO dto) {
         Project entity = mapper.toEntity(dto);
