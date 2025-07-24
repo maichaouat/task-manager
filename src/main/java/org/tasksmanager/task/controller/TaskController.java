@@ -19,9 +19,15 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskDTO>> getAllTasks(@PathVariable Long projectId) {
-        return ResponseEntity.ok(taskService.getTasksByProjectId(projectId));
+    public ResponseEntity<List<TaskDTO>> getAllTasks(
+            @PathVariable Long projectId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        List<TaskDTO> tasks = taskService.getTasksByProjectId(projectId, page, size);
+        return ResponseEntity.ok(tasks);
     }
+
 
     @GetMapping("/{taskId}")
     public ResponseEntity<TaskDTO> getTask(@PathVariable Long taskId) {

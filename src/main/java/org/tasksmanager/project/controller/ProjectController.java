@@ -39,7 +39,7 @@ public class ProjectController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
-
+    //todo: implement pagination in GET requests.
     @GetMapping("/{id}")
     public ResponseEntity<ProjectDTO> get(@PathVariable Long id) {
         return ResponseEntity.ok(service.getById(id));

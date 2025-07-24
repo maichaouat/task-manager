@@ -34,23 +34,29 @@ public class TaskControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+
     @Test
-    void testGetAllTasks() throws Exception {
+    void testGetAllTasksWithPagination() throws Exception {
         Long projectId = 1L;
+        int page = 0;
+        int size = 2;
 
         List<TaskDTO> mockTasks = List.of(
-                new TaskDTO(1L, "Task A", "Description A", TaskStatus.TODO),
-                new TaskDTO(2L, "Task B", "Description B", TaskStatus.DONE)
+                new TaskDTO(1L, "Task 1", "Description 1", TaskStatus.TODO),
+                new TaskDTO(2L, "Task 2", "Description 2", TaskStatus.IN_PROGRESS)
         );
 
-        when(taskService.getTasksByProjectId(projectId)).thenReturn(mockTasks);
+        when(taskService.getTasksByProjectId(projectId, page, size)).thenReturn(mockTasks);
 
-        mockMvc.perform(get("/api/projects/{projectId}/tasks", projectId))
+        mockMvc.perform(get("/api/projects/{projectId}/tasks", projectId)
+                        .param("page", String.valueOf(page))
+                        .param("size", String.valueOf(size)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].title").value("Task A"))
-                .andExpect(jsonPath("$[1].status").value("DONE"));
+                .andExpect(jsonPath("$[0].title").value("Task 1"))
+                .andExpect(jsonPath("$[1].status").value("IN_PROGRESS"));
     }
+
 
     @Test
     void testCreateTask() throws Exception {

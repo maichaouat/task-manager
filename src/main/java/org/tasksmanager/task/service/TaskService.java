@@ -1,5 +1,7 @@
 package org.tasksmanager.task.service;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.tasksmanager.task.repository.TaskRepository;
 import org.tasksmanager.task.mapper.TaskMapper;
@@ -26,11 +28,13 @@ public class TaskService {
         this.taskMapper = taskMapper;
     }
 
-    public List<TaskDTO> getTasksByProjectId(Long projectId) {
-        return taskRepository.findByProjectId(projectId).stream()
+    public List<TaskDTO> getTasksByProjectId(Long projectId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return taskRepository.findByProjectId(projectId, pageable).stream()
                 .map(taskMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
 
     public TaskDTO getTask(Long taskId) {
         Task task = taskRepository.findById(taskId)
