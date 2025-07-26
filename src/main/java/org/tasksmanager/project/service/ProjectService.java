@@ -1,8 +1,10 @@
 package org.tasksmanager.project.service;
 
+import org.springframework.stereotype.Service;
 import org.tasksmanager.common.dto.ProjectDTO;
 import java.util.List;
 
+@Service
 public interface ProjectService {
     ProjectDTO create(ProjectDTO dto);
     ProjectDTO getById(Long id);

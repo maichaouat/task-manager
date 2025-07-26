@@ -1,5 +1,6 @@
 package org.tasksmanager.task.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class TaskService {
     private final ProjectRepository projectRepository;
     private final TaskMapper taskMapper;
 
+    @Autowired
     public TaskService(TaskRepository taskRepository,
                        ProjectRepository projectRepository,
                        TaskMapper taskMapper) {

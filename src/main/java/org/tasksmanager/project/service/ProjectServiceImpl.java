@@ -1,5 +1,8 @@
 package org.tasksmanager.project.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.tasksmanager.auth.service.UserService;
 import org.tasksmanager.common.dto.ProjectDTO;
 import org.tasksmanager.project.entity.Project;
 import org.tasksmanager.project.repository.ProjectRepository;
@@ -10,20 +13,26 @@ import org.springframework.data.domain.*;
 import java.util.List;
 
 @Service
+@Primary
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository repository;
     private final ProjectMapper mapper;
+    private final UserService userService;
 
-    public ProjectServiceImpl(ProjectRepository repository, ProjectMapper mapper) {
+    @Autowired
+    public ProjectServiceImpl(ProjectRepository repository, ProjectMapper mapper,UserService userService) {
         this.repository = repository;
         this.mapper = mapper;
+        this.userService = userService;
     }
 
     @Override
     public ProjectDTO create(ProjectDTO dto) {
-        Project entity = mapper.toEntity(dto);
-        return mapper.toDto(repository.save(entity));
+        // Inject user ID from Cognito
+        String userId = userService.getCurrentUserId();
+        Project project = mapper.toEntity(dto, userId);
+        return mapper.toDto(repository.save(project));
     }
 
     @Override

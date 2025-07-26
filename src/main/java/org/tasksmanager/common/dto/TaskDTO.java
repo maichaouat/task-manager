@@ -1,12 +1,23 @@
 package org.tasksmanager.common.dto;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.Setter;
 import org.tasksmanager.common.enums.TaskStatus;
 
+@Getter @Setter
+@Schema(description = "Task DTO inside a project")
 public class TaskDTO {
     private Long id;
+
+    @Schema(description = "Task title", example = "Design homepage")
     private String title;
+
+    @Schema(description = "Task description", example = "Create new layout for the homepage")
     private String description;
+
+    @Schema(description = "Task status", example = "IN_PROGRESS")
     private TaskStatus status;
 
     // Constructors
@@ -16,39 +27,6 @@ public class TaskDTO {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.status = status;
-    }
-
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public TaskStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 }

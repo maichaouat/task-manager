@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,8 +18,9 @@ import org.tasksmanager.auth.handler.CognitoLogoutHandler;
  * Finally, we configure our logout handler.
  */
 @Slf4j
-@Configuration
 @EnableWebSecurity
+@Configuration
+@Profile("!test")
 public class SecurityConfiguration {
 
     @Bean
@@ -27,7 +29,14 @@ public class SecurityConfiguration {
         log.info("Granting access to /login");
         http.csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/",
+                                "/api/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs",
+                                "/swagger-resources/**",
+                                "/webjars/**").permitAll()
                         .anyRequest()
                         .authenticated())
                 .oauth2Login(Customizer.withDefaults())

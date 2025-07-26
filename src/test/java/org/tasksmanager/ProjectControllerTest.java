@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,11 +25,13 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-//@WebMvcTest(ProjectController.class)
+@SpringBootTest
 @AutoConfigureMockMvc
-@SpringBootTest(
-        classes = {TaskmanagerApplication.class}
-)
+@ActiveProfiles("test")  // <<< ACTIVATE test profile to exclude main SecurityConfig
+@ContextConfiguration(classes = {
+        TaskmanagerApplication.class,
+        TestSecurityConfig.class
+})
 public class ProjectControllerTest {
 
     @Autowired
