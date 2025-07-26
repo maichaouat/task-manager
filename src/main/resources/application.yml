@@ -1,6 +1,33 @@
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          cognito:
+            client-id: 3jj2ag9hpk2apiihddacenjuol
+            client-secret: 1r8tokv532q74sgp1sj27sb7uvnifd6dcnei7ifr1udse96hiqr1
+            scope:
+              - email
+              - openid
+              - phone
+            # Spring Security by default uses a redirect-uri in the format: {baseUrl}/login/oauth2/code/{registrationId}
+            # For example: http://localhost:8080/login/oauth2/code/cognito
+            # See more: https://docs.spring.io/spring-security/reference/servlet/oauth2/login/core.html#oauth2login-sample-redirect-uri
+            redirect-uri: http://localhost:8080/login/oauth2/code/cognito
+
+
+
+
+
+
+        provider:
+          cognito:
+            issuerUri: https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_AbjCAMvIs
+            user-name-attribute: username
   application:
     name: tasksmanager         # Spring Boot application name
+    cognito:
+      logout-redirect-uri: http://localhost:8080/app/logout-success
   datasource:
     url: jdbc:h2:mem:taskdb     # in-memory H2 database URL - todo: change later to real db
     driver-class-name: org.h2.Driver  # H2 JDBC driver class
@@ -15,6 +42,8 @@ spring:
       enabled: true             # enable H2 web console
       path: /h2-console         # URL path for the H2 console
 
+
+
 springdoc:
   api-docs:
     path:  /v3/api-docs
@@ -22,4 +51,6 @@ springdoc:
     path: /swagger-ui.html
     operationsSorter: method
     tagsSorter: alpha
+
+
 
