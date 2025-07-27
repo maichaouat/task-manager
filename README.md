@@ -3,7 +3,8 @@
 ## ✨ Project Overview
 
 This is a Task Management System built with Spring Boot (Java) on the backend and a lightweight HTML/JavaScript UI served through the Spring Boot app. Authentication is managed using AWS Cognito, and tasks and projects are stored in an H2 database (local or persistent file).
-[![Watch the demo video](https://img.shields.io/badge/Watch-Demo%20Video-blue?logo=video)](https://raw.githubusercontent.com/maichaouat/task-manager/main/src/main/resources/demo.mp4)
+
+[▶️ Watch Demo Video](https://raw.githubusercontent.com/maichaouat/task-manager/main/src/main/resources/assets/demo.mp4)
 
 ---------
 
