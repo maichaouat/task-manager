@@ -11,7 +11,7 @@ public class ProjectMapper {
         Project project = new Project();
         project.setName(dto.getName());
         project.setDescription(dto.getDescription());
-        project.setUserId(userId); // ✅ Set the userId
+        project.setUserId(userId); // ✅ Inject userId
         return project;
     }
 
