@@ -7,10 +7,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProjectMapper {
 
-    public Project toEntity(ProjectDTO dto) {
+    public Project toEntity(ProjectDTO dto, String userId) {
         Project project = new Project();
         project.setName(dto.getName());
         project.setDescription(dto.getDescription());
+        project.setUserId(userId); // ✅ Inject userId
         return project;
     }
 
