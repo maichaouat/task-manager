@@ -1,5 +1,6 @@
 package org.tasksmanager.project.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.tasksmanager.auth.service.UserService;
@@ -15,12 +16,11 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+@Slf4j
 @Service
 @Primary
 public class ProjectServiceImpl implements ProjectService {
 
-    private static final Logger log = LoggerFactory.getLogger(ProjectServiceImpl.class);
 
     private final ProjectRepository repository;
     private final ProjectMapper mapper;

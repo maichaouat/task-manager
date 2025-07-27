@@ -27,7 +27,7 @@ spring:
             # Spring Security by default uses a redirect-uri in the format: {baseUrl}/login/oauth2/code/{registrationId}
             # For example: http://localhost:8080/login/oauth2/code/cognito
             # See more: https://docs.spring.io/spring-security/reference/servlet/oauth2/login/core.html#oauth2login-sample-redirect-uri
-            redirect-uri: http://localhost:8080/login/oauth2/code/cognito
+            redirect-uri: "{baseUrl}/login/oauth2/code/cognito"
 
         provider:
           cognito:
@@ -36,6 +36,10 @@ spring:
 
   application:
     name: tasksmanager
+
+  jackson:
+    mapper:
+      accept-case-insensitive-enums: true
 
 
 server:
@@ -54,9 +58,16 @@ springdoc:
 
 logging:
   level:
-    root: ERROR
-    org.springdoc: DEBUG
-    org.springframework.web: DEBUG
-    org.springframework.context.annotation: DEBUG
+    root: INFO
+    org.springframework.web: WARN
+    org.hibernate.SQL: OFF        # Disable raw SQL logs unless needed
+    com.yourcompany: DEBUG         # Your app's packages
+
+  file:
+    name: logs/app.log
+
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"
+    console: "%d{HH:mm:ss} %-5level %logger{36} - %msg%n"
 
 

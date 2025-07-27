@@ -1,6 +1,7 @@
 package org.tasksmanager.task.controller;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +9,7 @@ import org.tasksmanager.task.service.TaskService;
 import org.tasksmanager.common.dto.TaskDTO;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/projects/{projectId}/tasks")
@@ -32,12 +34,14 @@ public class TaskController {
 
     @GetMapping("/{taskId}")
     public ResponseEntity<TaskDTO> getTask(@PathVariable Long taskId) {
+
         return ResponseEntity.ok(taskService.getTask(taskId));
     }
 
     @PostMapping
     public ResponseEntity<TaskDTO> createTask(@PathVariable Long projectId,
                                               @RequestBody TaskDTO dto) {
+
         return ResponseEntity.ok(taskService.createTask(projectId, dto));
     }
 
@@ -50,6 +54,7 @@ public class TaskController {
 
     @DeleteMapping("/{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
+
         taskService.deleteTask(taskId);
         return ResponseEntity.noContent().build();
     }

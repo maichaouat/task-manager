@@ -8,8 +8,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.web.SecurityFilterChain;
 import org.tasksmanager.auth.handler.CognitoLogoutHandler;
+import org.tasksmanager.auth.service.UserService;
 
 /**
  * Class to configure AWS Cognito as an OAuth 2.0 authorizer with Spring Security.
@@ -27,20 +30,31 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         CognitoLogoutHandler cognitoLogoutHandler = new CognitoLogoutHandler();
         log.info("Granting access to /login");
-        http.csrf(Customizer.withDefaults())
+        http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/",
-                                "/api/**",
+                        .requestMatchers(
+                                "/", "/login", "/error",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",
                                 "/v3/api-docs",
                                 "/swagger-resources/**",
-                                "/webjars/**").permitAll()
-                        .anyRequest()
-                        .authenticated())
-                .oauth2Login(Customizer.withDefaults())
+                                "/webjars/**"
+                        ).permitAll()
+                        .requestMatchers("/api/**", "/projects.html").authenticated()
+                        .anyRequest().authenticated()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .successHandler((request, response, authentication) -> {
+                            OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
+                            String username = token.getPrincipal().getAttributes().get("username").toString();
+                            log.info("User '{}' logged in", username);
+
+                        })
+                        .defaultSuccessUrl("/", true)
+                )
                 .logout(logout -> logout.logoutSuccessHandler(cognitoLogoutHandler));
+
         return http.build();
     }
 }

@@ -1,6 +1,10 @@
 package org.tasksmanager.project.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.tasksmanager.common.dto.ProjectDTO;
 import org.tasksmanager.project.service.ProjectService;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
@@ -21,10 +26,14 @@ public class ProjectController {
     }
 
     @GetMapping("/health")
-    public ResponseEntity<String> health(){return ResponseEntity.ok("Server is running");}
+    public ResponseEntity<String> health(OAuth2AuthenticationToken token){
+        log.info("Authenticated user: {}", token.getPrincipal().getAttributes());
+        return ResponseEntity.ok("Server is running " + token.getCredentials());}
 
     @PostMapping
     public ResponseEntity<ProjectDTO> create(@RequestBody ProjectDTO dto) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("Authorities: " + auth.getAuthorities());
 
         return ResponseEntity.ok(service.create(dto));
     }
