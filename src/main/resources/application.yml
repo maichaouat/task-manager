@@ -36,6 +36,8 @@ spring:
 
   application:
     name: tasksmanager
+    cognito:
+      logout-redirect-uri: http://localhost:8080
 
   jackson:
     mapper:

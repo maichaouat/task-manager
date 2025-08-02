@@ -27,15 +27,21 @@ import org.tasksmanager.auth.service.UserService;
 public class SecurityConfiguration {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        CognitoLogoutHandler cognitoLogoutHandler = new CognitoLogoutHandler();
-        log.info("Granting access to /login");
+    public CognitoLogoutHandler cognitoLogoutHandler(
+            @Value("${spring.application.cognito.logout-redirect-uri}") String logoutRedirectUri,
+            @Value("${spring.security.oauth2.client.registration.cognito.client-id}") String clientId
+    ) {
+        return new CognitoLogoutHandler(logoutRedirectUri, clientId);
+    }
+
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http, CognitoLogoutHandler cognitoLogoutHandler) throws Exception {
+
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers(
                                 "/", "/login", "/error",
-                                "/swagger-ui/**",
-                                "/swagger-ui.html",
                                 "/v3/api-docs/**",
                                 "/v3/api-docs",
                                 "/swagger-resources/**",

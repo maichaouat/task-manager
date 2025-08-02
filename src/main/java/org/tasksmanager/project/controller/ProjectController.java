@@ -28,7 +28,7 @@ public class ProjectController {
     @GetMapping("/health")
     public ResponseEntity<String> health(OAuth2AuthenticationToken token){
         log.info("Authenticated user: {}", token.getPrincipal().getAttributes());
-        return ResponseEntity.ok("Server is running " + token.getCredentials());}
+        return ResponseEntity.ok("Server is running");}
 
     @PostMapping
     public ResponseEntity<ProjectDTO> create(@RequestBody ProjectDTO dto) {
