@@ -86,7 +86,6 @@ If the system needs to handle 10,000 daily users, I recommend the following depl
 
 **Logging & Monitoring:** Use AWS CloudWatch, Prometheus, and Grafana to monitor system health, detect bottlenecks, and trigger alerts.
 
-**Performance Optimization:** Tune thread pools and use HikariCP for efficient DB connection management.
 
 ## 🌐 Frontend Hosting
 
