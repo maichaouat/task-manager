@@ -2,8 +2,6 @@ package org.tasksmanager.project.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.tasksmanager.common.dto.ProjectDTO;
 import org.tasksmanager.project.service.ProjectService;
@@ -32,9 +30,6 @@ public class ProjectController {
 
     @PostMapping
     public ResponseEntity<ProjectDTO> create(@RequestBody ProjectDTO dto) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("Authorities: " + auth.getAuthorities());
-
         return ResponseEntity.ok(service.create(dto));
     }
 

@@ -23,13 +23,11 @@ public class CognitoLogoutHandler extends SimpleUrlLogoutSuccessHandler {
     /**
      * An allowed callback URL.
      */
-   //@Value("${spring.application.cognito.logout-redirect-uri}")
     private String logoutRedirectUrl;
 
     /**
      * The ID of your User Pool Client.
      */
-    //@Value("${spring.security.oauth2.client.registration.cognito.client-id}")
     private String userPoolClientId;
 
     public CognitoLogoutHandler(String logoutRedirectUri, String clientId) {
